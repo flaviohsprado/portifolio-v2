@@ -1,0 +1,24 @@
+{
+  "name": "@portifolio-v2/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@portifolio-v2/db": "workspace:*",
+    "@portifolio-v2/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@portifolio-v2/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

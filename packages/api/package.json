@@ -1,0 +1,28 @@
+{
+  "name": "@portifolio-v2/api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@portifolio-v2/auth": "workspace:*",
+    "@portifolio-v2/db": "workspace:*",
+    "@portifolio-v2/env": "workspace:*",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@types/pg": "catalog:",
+    "dotenv": "catalog:",
+    "drizzle-orm": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@portifolio-v2/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
