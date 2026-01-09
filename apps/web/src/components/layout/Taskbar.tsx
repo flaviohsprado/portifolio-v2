@@ -205,8 +205,14 @@ export function Taskbar() {
                            )}
                         </div>
                      </TooltipTrigger>
-                     <TooltipContent className="bg-black/50 p-1">
-                        <GroupedWindowTooltip windows={group.windows} onWindowSelect={handleWindowSelect} />
+                     <TooltipContent
+                        sideOffset={10}
+                        className="p-0 bg-transparent border-none shadow-none rounded-none"
+                     >
+                        <GroupedWindowTooltip
+                           windows={group.windows}
+                           onWindowSelect={handleWindowSelect}
+                        />
                      </TooltipContent>
                   </Tooltip>
                ))}

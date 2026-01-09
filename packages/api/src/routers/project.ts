@@ -3,15 +3,25 @@ import {
 	UpdateProjectFormSchema,
 } from "@portifolio-v2/config/schemas";
 import { project } from "@portifolio-v2/db/schema/index";
+import { TRPCError } from "@trpc/server";
 import { asc, eq } from "drizzle-orm";
 import z from "zod";
 import { protectedProcedure, publicProcedure, router } from "..";
 
 export const projectRouter = router({
 	get: publicProcedure.query(async ({ ctx }) => {
-		return await ctx.db.query.project.findMany({
+		const response = await ctx.db.query.project.findMany({
 			orderBy: [asc(project.name)],
 		});
+
+		if (!response) {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: "Projects not found",
+			});
+		}
+
+		return response;
 	}),
 
 	find: protectedProcedure

@@ -99,16 +99,16 @@ export function Window({
 			</div>
 
 			{/* Window Header navigation and search bar */}
-			<div className="flex items-center justify-between py-2 bg-[#191919] h-8 border-b border-[#333]">
+			<div className="flex items-center justify-between py-2 bg-win-bg-panel h-8 border-b border-win-border">
 				<div className="flex items-center gap-2 pl-2">
-					<button type="button" className="p-1 hover:bg-gray-700 rounded disabled:opacity-50">
-						<ArrowLeft className="h-4 w-4 text-gray-400" />
+					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
+						<ArrowLeft className="h-4 w-4 text-win-text-muted hover:text-white" />
 					</button>
-					<button type="button" className="p-1 hover:bg-gray-700 rounded disabled:opacity-50">
-						<ArrowRight className="h-4 w-4 text-gray-400" />
+					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
+						<ArrowRight className="h-4 w-4 text-win-text-muted hover:text-white" />
 					</button>
-					<button type="button" className="p-1 hover:bg-gray-700 rounded">
-						<ArrowUp className="h-4 w-4 text-gray-400" />
+					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
+						<ArrowUp className="h-4 w-4 text-win-text-muted hover:text-white" />
 					</button>
 				</div>
 
