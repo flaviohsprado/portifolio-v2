@@ -1,4 +1,5 @@
 import { auth } from "@portifolio-v2/auth";
+import { db } from "@portifolio-v2/db";
 
 export async function createContext({ req }: { req: Request }) {
   const session = await auth.api.getSession({
@@ -6,6 +7,7 @@ export async function createContext({ req }: { req: Request }) {
   });
   return {
     session,
+    db,
   };
 }
 

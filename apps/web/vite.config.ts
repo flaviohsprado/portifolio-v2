@@ -10,4 +10,13 @@ export default defineConfig({
   server: {
     port: 3001,
   },
+  resolve: {
+    dedupe: ["react", "react-dom"],
+  },
+  ssr: {
+    noExternal: [
+      "@trpc/tanstack-react-query",
+      "@tanstack/react-query",
+    ],
+  },
 });

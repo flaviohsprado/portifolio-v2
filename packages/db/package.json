@@ -1,31 +1,32 @@
 {
-  "name": "@portifolio-v2/db",
-  "type": "module",
-  "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
-    }
-  },
-  "scripts": {
-    "db:push": "drizzle-kit push",
-    "db:generate": "drizzle-kit generate",
-    "db:studio": "drizzle-kit studio",
-    "db:migrate": "drizzle-kit migrate"
-  },
-  "dependencies": {
-    "@portifolio-v2/env": "workspace:*",
-    "dotenv": "catalog:",
-    "drizzle-orm": "catalog:",
-    "pg": "^8.16.3",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@portifolio-v2/config": "workspace:*",
-    "@types/pg": "catalog:",
-    "drizzle-kit": "^0.31.8",
-    "typescript": "catalog:"
-  }
+	"name": "@portifolio-v2/db",
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
+		"db:studio": "drizzle-kit studio",
+		"db:migrate": "drizzle-kit migrate"
+	},
+	"dependencies": {
+		"@portifolio-v2/env": "workspace:*",
+		"@portifolio-v2/config": "workspace:*",
+		"dotenv": "catalog:",
+		"drizzle-orm": "catalog:",
+		"pg": "^8.16.3",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@portifolio-v2/config": "workspace:*",
+		"@types/pg": "catalog:",
+		"drizzle-kit": "^0.31.8",
+		"typescript": "catalog:"
+	}
 }

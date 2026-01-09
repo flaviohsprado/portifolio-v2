@@ -1,14 +1,10 @@
 import type { AppRouter } from "@portifolio-v2/api/routers/index";
 import type { QueryClient } from "@tanstack/react-query";
+import { createRootRouteWithContext, Outlet, Scripts } from "@tanstack/react-router";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { Toaster } from "@/components/ui/sonner";
 
-import Header from "../components/header";
 import appCss from "../index.css?url";
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
@@ -26,7 +22,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "My App",
+        title: "Flávio Prado - Desktop",
       },
     ],
     links: [
@@ -43,17 +39,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 function RootDocument() {
   return (
     <html lang="en" className="dark">
-      <head>
-        <HeadContent />
-      </head>
       <body>
         <div className="grid h-svh grid-rows-[auto_1fr]">
-          <Header />
           <Outlet />
         </div>
         <Toaster richColors />
-        <TanStackRouterDevtools position="bottom-left" />
-        <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
         <Scripts />
       </body>
     </html>

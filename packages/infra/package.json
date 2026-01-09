@@ -1,19 +1,21 @@
 {
-  "name": "@portifolio-v2/infra",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "alchemy dev",
-    "deploy": "alchemy deploy",
-    "destroy": "alchemy destroy"
-  },
-  "dependencies": {
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@portifolio-v2/config": "workspace:*",
-    "alchemy": "catalog:",
-    "typescript": "catalog:"
-  }
+	"name": "@portifolio-v2/infra",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "alchemy dev",
+		"deploy": "alchemy deploy",
+		"destroy": "alchemy destroy",
+		"configure": "alchemy configure",
+		"login": "alchemy login"
+	},
+	"dependencies": {
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@portifolio-v2/config": "workspace:*",
+		"alchemy": "catalog:",
+		"typescript": "catalog:"
+	}
 }
