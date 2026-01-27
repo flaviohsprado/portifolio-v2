@@ -1,5 +1,6 @@
 import { WindowsFolderIcon } from "@/components/ui/windows/folder";
 import { TaskbarFolderIcon } from "@/components/ui/windows/taskbar-folder";
+import { useSystemStore } from "@/hooks/use-system-store";
 import { useWindowManager } from "@/hooks/use-window-manager";
 import { createStandardWindow } from "@/lib/window-helpers";
 import { Trash2 } from "lucide-react";
@@ -12,18 +13,17 @@ import { Taskbar } from "./Taskbar";
 import { WindowRenderer } from "./WindowRenderer";
 
 const INITIAL_DESKTOP_ITEMS = [
-	{ id: "recycle", label: "Lixeira", icon: <Trash2 className="size-8 text-white" />, type: "system" },
-	{ id: "projects", label: "Projetos", icon: <WindowsFolderIcon className="size-10" />, type: "folder", appId: "projects" },
-	{ id: "certs", label: "Certificados", icon: <WindowsFolderIcon className="size-10 text-yellow-300" />, type: "folder", appId: "certs" },
+	{ id: "recycle", label: "Recycle Bin", icon: <Trash2 className="size-8 text-white" />, type: "system" },
+	{ id: "projects", label: "Projects", icon: <WindowsFolderIcon className="size-10" />, type: "folder", appId: "projects" },
 ];
 
 export function Desktop() {
 	const { windows, openWindow } = useWindowManager();
+	const { wallpaper } = useSystemStore();
 
 	const [isSelecting, setIsSelecting] = useState(false);
 	const [selectionBox, setSelectionBox] = useState<{ start: { x: number, y: number }, end: { x: number, y: number } } | null>(null);
 	const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
-
 	const [contextMenu, setContextMenu] = useState<{ x: number, y: number } | null>(null);
 
 	const desktopRef = useRef<HTMLDivElement>(null);
@@ -85,8 +85,8 @@ export function Desktop() {
 	return (
 		<div
 			ref={desktopRef}
-			className="h-screen w-screen overflow-hidden relative select-none bg-cover bg-center"
-			style={{ backgroundImage: `url('/images/win10-wallpaper.jpg')` }}
+			className="h-screen w-screen overflow-hidden relative select-none bg-cover bg-center transition-all duration-700 ease-in-out"
+			style={{ backgroundImage: `url('${wallpaper}')` }}
 			onMouseDown={handleMouseDown}
 			onMouseMove={handleMouseMove}
 			onMouseUp={handleMouseUp}

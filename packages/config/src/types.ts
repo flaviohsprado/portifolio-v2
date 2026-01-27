@@ -173,3 +173,5 @@ export type WindowType =
 	| "project-details"
 	| "projects"
 	| "profile";
+
+export type SettingsPage = "home" | "system" | "personalization" | "accounts";

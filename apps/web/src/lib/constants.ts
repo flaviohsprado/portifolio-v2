@@ -97,38 +97,24 @@ export const FILE_SYSTEM: ExplorerItem[] = [
 
 export const RESUME_DATA = {
 	profile: {
-		name: "Seu Nome",
-		title: "Senior Full Stack Developer",
+		name: "Flávio Prado",
+		role: "Senior FullStack Developer",
+		bio: "Desenvolvedor apaixonado por criar experiências web imersivas e interfaces pixel-perfect. Especialista em React, Node.js e arquitetura de sistemas.",
 		email: "contato@exemplo.com",
 		location: "São Paulo, Brasil",
-		social: {
-			github: "https://github.com/seuuser",
-			linkedin: "https://linkedin.com/in/seuuser",
-		},
-		about:
-			"Desenvolvedor apaixonado por criar experiências web imersivas e interfaces pixel-perfect. Especialista em React, Node.js e arquitetura de sistemas.",
 	},
 	experience: [
 		{
 			company: "Tech Corp",
 			role: "Senior Frontend Engineer",
-			period: "2023 - Presente",
+			period: "2023 - Present",
 			description: "Liderança técnica do time de Design System.",
-			impact: [
-				"Redução de 40% no tempo de desenvolvimento com novo Design System.",
-				"Implementação de testes E2E que diminuíram bugs em produção em 25%.",
-				"Mentoria de 3 desenvolvedores júnior.",
-			],
 		},
 		{
 			company: "StartUp Innovator",
 			role: "Full Stack Developer",
 			period: "2021 - 2023",
 			description: "Desenvolvimento de MVP para fintech.",
-			impact: [
-				"Escalou a aplicação de 0 para 50k usuários.",
-				"Integração com Open Finance APIs.",
-			],
 		},
 	],
 	education: [
@@ -138,11 +124,33 @@ export const RESUME_DATA = {
 			period: "2017 - 2021",
 		},
 	],
-	certificates: [
-		{ name: "AWS Solutions Architect", issuer: "Amazon", date: "2024" },
-		{ name: "FullStack Master", issuer: "Rocketseat", date: "2023" },
+	techStack: [
+		"React",
+		"TypeScript",
+		"Node.js",
+		"Next.js",
+		"TailwindCSS",
+		"PostgreSQL",
 	],
 };
+
+export const ACCENT_COLORS = [
+	"bg-[#0078d7]",
+	"bg-[#e81123]",
+	"bg-[#881798]",
+	"bg-[#107c10]",
+	"bg-[#e3008c]",
+	"bg-[#00b294]",
+	"bg-[#ff8c00]",
+];
+
+export const WALLPAPERS = [
+	"/images/win10-wallpaper.jpg",
+	"/images/win11-wallpaper.jpg",
+	"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&q=80",
+	"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1920&q=80",
+	"https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+];
 
 export const resizeHandleClasses = {
 	n: "top-0 left-0 right-0 h-1 cursor-ns-resize",
