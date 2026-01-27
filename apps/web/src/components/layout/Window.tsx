@@ -1,12 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { resizeHandleClasses } from "@/lib/constants";
 import type { WindowInstance } from "@portifolio-v2/config";
-import {
-	Copy,
-	Minus,
-	Square,
-	X
-} from "lucide-react";
+import { Copy, Minus, Square, X } from "lucide-react";
+import { motion } from "motion/react";
 
 interface WindowProps {
 	window: WindowInstance;
@@ -21,6 +17,31 @@ interface WindowProps {
 	onResizeStart: (direction: string, e: React.MouseEvent) => void;
 }
 
+const windowVariants = {
+	initial: {
+		opacity: 0,
+		scale: 0.95,
+	},
+	visible: {
+		opacity: 1,
+		scale: 1,
+		display: "block",
+		transition: { duration: 0.2, ease: "easeOut" }
+	},
+	exit: {
+		opacity: 0,
+		scale: 0.95,
+		transition: { duration: 0.15, ease: "easeIn" }
+	},
+	minimized: {
+		opacity: 0,
+		scale: 0.7,
+		y: 200, // Optional: effect of dropping down
+		transition: { duration: 0.2, ease: "easeIn" },
+		transitionEnd: { display: "none" }
+	}
+};
+
 export function Window({
 	window,
 	isMaximized,
@@ -34,19 +55,26 @@ export function Window({
 	onResizeStart,
 }: WindowProps) {
 	return (
-		<div
+		<motion.div
 			className="fixed rounded-none shadow-win-lg overflow-hidden border border-gray-600/50" // Adicionei uma borda subtil para destacar do fundo
 			data-window-container
+
+			initial="initial"
+			animate={window.isMinimized ? "minimized" : "visible"}
+			exit="exit"
+			variants={windowVariants}
+
 			style={{
 				left: 0,
 				top: 0,
-				transform: isMaximized ? "translate(0, 0)" : `translate(${position.x}px, ${position.y}px)`,
+				// Use x/y for motion compatibility instead of raw transform string
+				x: isMaximized ? 0 : position.x,
+				y: isMaximized ? 0 : position.y,
 				width: isMaximized ? "100vw" : `${window.size.width}px`,
 				height: isMaximized ? "calc(100vh - 3rem)" : `${window.size.height}px`,
 				zIndex: window.zIndex,
-				display: window.isMinimized ? "none" : "block",
 				willChange: isDragging ? "transform" : "auto",
-			}}
+			} as any}
 		>
 			{/* Bordas */}
 			<div onMouseDown={(e) => onResizeStart?.('n', e)} className={`absolute z-50 ${resizeHandleClasses.n} -top-1`} />
@@ -116,6 +144,6 @@ export function Window({
 			</div>
 
 
-		</div>
+		</motion.div>
 	);
 }

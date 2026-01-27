@@ -3,11 +3,11 @@ import { TaskbarFolderIcon } from "@/components/ui/windows/taskbar-folder";
 import { useWindowManager } from "@/hooks/use-window-manager";
 import { createStandardWindow } from "@/lib/window-helpers";
 import { Trash2 } from "lucide-react";
+import { AnimatePresence } from "motion/react";
 import { useRef, useState } from "react";
 import { ProjectsApp } from "../apps/Projects";
 import { DesktopContextMenu } from "./DesktopContextMenu";
 import { DesktopItem } from "./DesktopItem";
-import { ActionCenter } from "./Notification";
 import { Taskbar } from "./Taskbar";
 import { WindowRenderer } from "./WindowRenderer";
 
@@ -23,7 +23,6 @@ export function Desktop() {
 	const [isSelecting, setIsSelecting] = useState(false);
 	const [selectionBox, setSelectionBox] = useState<{ start: { x: number, y: number }, end: { x: number, y: number } } | null>(null);
 	const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
-	const [actionCenterOpen, setActionCenterOpen] = useState<boolean>(false);
 
 	const [contextMenu, setContextMenu] = useState<{ x: number, y: number } | null>(null);
 
@@ -125,13 +124,13 @@ export function Desktop() {
 				/>
 			)}
 
-			{windows.map((window) => (
-				<WindowRenderer key={window.id} window={window} />
-			))}
+			<AnimatePresence>
+				{windows.map((window) => (
+					<WindowRenderer key={window.id} window={window} />
+				))}
+			</AnimatePresence>
 
-			<Taskbar onToggleActionCenter={() => setActionCenterOpen(true)} />
-
-			<ActionCenter isOpen={actionCenterOpen} onClose={() => setActionCenterOpen(!actionCenterOpen)} />
+			<Taskbar />
 
 			{contextMenu && <DesktopContextMenu x={contextMenu.x} y={contextMenu.y} />}
 		</div>

@@ -36,10 +36,8 @@ export const useWindowManager = create<WindowManagerState>((set, get) => ({
 		const newId = `window-${idCounter++}`;
 		const newZIndex = zIndexCounter++;
 
-		// Check if window already exists
 		const existingWindow = get().windows.find((w) => w.id === newId);
 		if (existingWindow) {
-			// If window exists, just restore it
 			set((state) => ({
 				windows: state.windows.map((w) =>
 					w.id === newId ? { ...w, isMinimized: false, zIndex: newZIndex } : w,
@@ -48,7 +46,6 @@ export const useWindowManager = create<WindowManagerState>((set, get) => ({
 			return;
 		}
 
-		// Ensure the new window position is within viewport boundaries
 		const constrainedPosition = constrainToBoundaries(
 			newWindow.position,
 			newWindow.size.width,

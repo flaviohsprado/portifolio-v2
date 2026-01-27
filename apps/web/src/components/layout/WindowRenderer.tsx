@@ -1,14 +1,20 @@
 import { useWindowDrag } from "@/hooks/use-window-drag"; // Importe o hook novo
 import { useWindowManager } from "@/hooks/use-window-manager";
 import { useWindowResize } from "@/hooks/use-window-resize";
-
+import type { WindowInstance } from "@portifolio-v2/config";
+import { BrowserApp } from "../apps/Browser";
 // Importe seus apps
 import { FileExplorer } from "../apps/FileExplorer";
 import { ProfileApp } from "../apps/Profile"; // Se já criou o profile
 import { ProjectsApp } from "../apps/Projects";
+import { SettingsApp } from "../apps/Settings";
 import { Window } from "./Window";
 
-export function WindowRenderer({ window }: { window: any }) {
+interface WindowRendererProps {
+	window: WindowInstance;
+}
+
+export function WindowRenderer({ window }: WindowRendererProps) {
 	const {
 		focusWindow,
 		closeWindow,
@@ -16,17 +22,17 @@ export function WindowRenderer({ window }: { window: any }) {
 		maximizeWindow
 	} = useWindowManager();
 
-	// Hooks de Lógica
 	const { startResize } = useWindowResize(window);
 	const { startDrag, isDragging } = useWindowDrag(window);
 
-	// Renderiza o conteúdo baseado no tipo
 	const renderContent = () => {
 		switch (window.type) {
 			case "explorer": return <FileExplorer />;
-			case "window": return window.component; // Para janelas genéricas
+			case "window": return window.component;
 			case "projects": return <ProjectsApp />;
 			case "profile": return <ProfileApp />;
+			case "browser": return <BrowserApp />;
+			case "settings": return <SettingsApp />;
 			default: return <div className="p-4 text-white">App not found: {window.type}</div>;
 		}
 	};

@@ -37,12 +37,16 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"suspicious": {
+				"noArrayIndexKey": "off"
+			},
 			"correctness": {
 				"useExhaustiveDependencies": "info"
 			},
 			"a11y": {
 				"noStaticElementInteractions": "off",
-				"useKeyWithClickEvents": "off"
+				"useKeyWithClickEvents": "off",
+				"noLabelWithoutControl": "off"
 			},
 			"nursery": {
 				"useSortedClasses": "off"
@@ -52,12 +56,12 @@
 				"useAsConstAssertion": "error",
 				"useDefaultParameterLast": "error",
 				"useEnumInitializers": "error",
-				"useSelfClosingElements": "error",
 				"useSingleVarDeclarator": "error",
 				"noUnusedTemplateLiteral": "error",
 				"useNumberNamespace": "error",
 				"noInferrableTypes": "error",
-				"noUselessElse": "error"
+				"noUselessElse": "error",
+				"useSelfClosingElements": "off"
 			}
 		}
 	},

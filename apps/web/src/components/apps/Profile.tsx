@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { RESUME_DATA } from "@/lib/constants"; // Importe seus dados
+import { RESUME_DATA } from "@/lib/constants";
 import {
 	Briefcase,
 	Building2,

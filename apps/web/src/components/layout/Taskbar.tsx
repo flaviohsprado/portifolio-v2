@@ -18,13 +18,9 @@ import { StartMenu } from "./StartMenu";
 import { CalendarFlyout } from "./taskbar/CalendarFlyout";
 import { NetworkFlyout, VolumeFlyout } from "./taskbar/SystemFlyouts";
 
-interface TaskbarProps {
-	onToggleActionCenter?: () => void;
-}
-
 type TrayPopup = "none" | "start" | "calendar" | "volume" | "network" | "action-center";
 
-export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
+export function Taskbar() {
 	const { windows, openWindow, focusWindow, restoreWindow } =
 		useWindowManager();
 	const [activePopup, setActivePopup] = useState<TrayPopup>("none");
@@ -265,7 +261,7 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 					<Button
 						variant="ghost"
 						size="sm"
-						className="h-12 hover:bg-[#545454]! hover:text-white! transition-all gap-2 px-3 rounded-none"
+						className="h-12 hover:bg-win-hover-taskbar! hover:text-white! transition-all gap-2 px-3 rounded-none"
 						onClick={() => togglePopup("calendar")}
 					>
 						<div className="text-xs text-left flex flex-col items-center justify-center">

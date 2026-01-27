@@ -19,49 +19,49 @@ export type Project = {
 };
 
 export enum ContentType {
-   ISSUE = "issue",
-   PROJECT = "project",
-   USER = "user",
-   AVATAR = "avatar",
+	ISSUE = "issue",
+	PROJECT = "project",
+	USER = "user",
+	AVATAR = "avatar",
 }
 export type ImageItem = z.infer<typeof ImageItemSchema>;
 
 type CustomOption = {
-   label: string;
-   value: string;
+	label: string;
+	value: string;
 };
 export type CustomOptions = Array<CustomOption>;
 
 export enum IssueStatus {
-   PENDING = "pending",
-   PROGRESS = "progress",
-   DONE = "done",
-   CLOSED = "closed",
+	PENDING = "pending",
+	PROGRESS = "progress",
+	DONE = "done",
+	CLOSED = "closed",
 }
 export enum IssuePriority {
-   LOW = "low",
-   MEDIUM = "medium",
-   HIGH = "high",
-   URGENT = "urgent",
+	LOW = "low",
+	MEDIUM = "medium",
+	HIGH = "high",
+	URGENT = "urgent",
 }
 export enum IssueType {
-   BUG = "bug",
-   FEATURE = "feature",
-   ENHANCEMENT = "enhancement",
-   TASK = "task",
+	BUG = "bug",
+	FEATURE = "feature",
+	ENHANCEMENT = "enhancement",
+	TASK = "task",
 }
 
 export type ProjectLink = {
-   id: string;
-   name: string;
-   href: string;
-   icon: ReactNode;
+	id: string;
+	name: string;
+	href: string;
+	icon: ReactNode;
 };
 
 export enum ContentCodeEnum {
-   PROJECT = "project",
-   ENV = "env",
-   ISSUE = "issue",
+	PROJECT = "project",
+	ENV = "env",
+	ISSUE = "issue",
 }
 
 /**
@@ -133,7 +133,23 @@ export type WindowInstance =
 	| ExplorerWindow
 	| BrowserWindow
 	| SettingsWindow
-	| ProjectDetailsWindow;
+	| ProjectDetailsWindow
+	| ProjectsWindow
+	| ProfileWindow;
+
+/**
+ * Projects window
+ */
+export type ProjectsWindow = BaseWindow & {
+	type: "projects";
+};
+
+/**
+ * Profile window
+ */
+export type ProfileWindow = BaseWindow & {
+	type: "profile";
+};
 
 export type NewWindow =
 	| Omit<StandardWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
@@ -141,7 +157,9 @@ export type NewWindow =
 	| Omit<ExplorerWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
 	| Omit<BrowserWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
 	| Omit<SettingsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
-	| Omit<ProjectDetailsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">;
+	| Omit<ProjectDetailsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
+	| Omit<ProjectsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
+	| Omit<ProfileWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">;
 
 /**
  * Window type for creating new windows
@@ -152,4 +170,6 @@ export type WindowType =
 	| "explorer"
 	| "browser"
 	| "settings"
-	| "project-details";
+	| "project-details"
+	| "projects"
+	| "profile";
