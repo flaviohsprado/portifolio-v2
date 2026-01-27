@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { resizeHandleClasses } from "@/lib/constants";
 import type { WindowInstance } from "@portifolio-v2/config";
 import { Copy, Minus, Square, X } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 
 interface WindowProps {
 	window: WindowInstance;
@@ -17,7 +17,7 @@ interface WindowProps {
 	onResizeStart: (direction: string, e: React.MouseEvent) => void;
 }
 
-const windowVariants = {
+const windowVariants: Variants = {
 	initial: {
 		opacity: 0,
 		scale: 0.95,
@@ -58,7 +58,6 @@ export function Window({
 		<motion.div
 			className="fixed rounded-none shadow-win-lg overflow-hidden border border-gray-600/50" // Adicionei uma borda subtil para destacar do fundo
 			data-window-container
-
 			initial="initial"
 			animate={window.isMinimized ? "minimized" : "visible"}
 			exit="exit"
@@ -107,7 +106,7 @@ export function Window({
 						variant="ghost"
 						size="icon"
 						onClick={handleMinimize}
-						className="h-8 w-12 rounded-none text-[#808080]! hover:bg-[#414141]! hover:text-white!"
+						className="h-8 w-12 rounded-none text-win-text-muted! hover:bg-win-hover-control! hover:text-white!"
 					>
 						<Minus className="size-3" />
 					</Button>
@@ -115,7 +114,7 @@ export function Window({
 						variant="ghost"
 						size="icon"
 						onClick={handleMaximize}
-						className="h-8 w-12 rounded-none text-[#808080]! hover:bg-[#414141]! hover:text-white!"
+						className="h-8 w-12 rounded-none text-win-text-muted! hover:bg-win-hover-control! hover:text-white!"
 					>
 						{/* Alterna o ícone visualmente */}
 						{isMaximized ? (
@@ -128,22 +127,16 @@ export function Window({
 						variant="ghost"
 						size="icon"
 						onClick={handleClose}
-						className="h-8 w-12 rounded-none text-[#808080]! hover:bg-red-500! hover:text-white!"
+						className="h-8 w-12 rounded-none text-win-text-muted! hover:bg-red-500! hover:text-white!"
 					>
 						<X className="size-4" />
 					</Button>
 				</div>
 			</div>
 
-
-
-			{/* Window Content */}
-			{/* Ajuste de altura: 100% - (Header 2rem / 32px) */}
-			<div className="h-[calc(100%-2rem)] bg-[#0c0c0c] overflow-auto text-white">
+			<div className="h-[calc(100%-2rem)] bg-win-bg-window overflow-auto text-win-text">
 				{children}
 			</div>
-
-
 		</motion.div>
 	);
 }

@@ -169,8 +169,14 @@ export function ProfileApp() {
 	);
 }
 
-// Sub-componentes para limpar o código
-function SidebarItem({ active, icon, label, onClick }: any) {
+interface SidebarItemProps {
+	active: boolean;
+	icon: React.ReactNode;
+	label: string;
+	onClick: () => void;
+}
+
+function SidebarItem({ active, icon, label, onClick }: SidebarItemProps) {
 	return (
 		<button
 			type="button"
@@ -188,7 +194,13 @@ function SidebarItem({ active, icon, label, onClick }: any) {
 	);
 }
 
-function InfoCard({ icon, label, value }: any) {
+interface InfoCardProps {
+	icon: React.ReactNode;
+	label: string;
+	value: string;
+}
+
+function InfoCard({ icon, label, value }: InfoCardProps) {
 	return (
 		<div className="bg-win-bg-surface p-4 border border-win-border flex items-center gap-4">
 			<div className="p-2 bg-win-bg-panel rounded">{icon}</div>

@@ -22,7 +22,27 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
         title: "Flávio Prado - Desktop",
+      },
+      {
+        name: "description",
+        content:
+          "Flávio Prado - Desktop",
+      },
+      {
+        name: "author",
+        content: "Flávio Prado",
+      },
+      {
+        name: "robots",
+        content: "index, follow",
+      },
+      {
+        name: "googlebot",
       },
     ],
     links: [
