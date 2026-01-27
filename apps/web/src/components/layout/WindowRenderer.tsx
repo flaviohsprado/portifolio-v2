@@ -5,9 +5,9 @@ import type { WindowInstance } from "@portifolio-v2/config";
 import { BrowserApp } from "../apps/Browser";
 // Importe seus apps
 import { FileExplorer } from "../apps/FileExplorer";
-import { ProfileApp } from "../apps/Profile"; // Se já criou o profile
 import { ProjectsApp } from "../apps/Projects";
 import { SettingsApp } from "../apps/Settings";
+import { TerminalApp } from "../apps/Terminal";
 import { Window } from "./Window";
 
 interface WindowRendererProps {
@@ -30,9 +30,9 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 			case "explorer": return <FileExplorer />;
 			case "window": return window.component;
 			case "projects": return <ProjectsApp />;
-			case "profile": return <ProfileApp />;
 			case "browser": return <BrowserApp />;
 			case "settings": return <SettingsApp />;
+			case "terminal": return <TerminalApp />;
 			default: return <div className="p-4 text-white">App not found: {window.type}</div>;
 		}
 	};

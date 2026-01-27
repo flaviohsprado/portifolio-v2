@@ -88,6 +88,9 @@ export type StandardWindow = BaseWindow & {
 	component: ReactNode;
 };
 
+export type TerminalWindow = BaseWindow & {
+	type: "terminal";
+};
 /**
  * VSCode window that receives a project
  */
@@ -135,7 +138,8 @@ export type WindowInstance =
 	| SettingsWindow
 	| ProjectDetailsWindow
 	| ProjectsWindow
-	| ProfileWindow;
+	| ProfileWindow
+	| TerminalWindow;
 
 /**
  * Projects window
@@ -159,7 +163,8 @@ export type NewWindow =
 	| Omit<SettingsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
 	| Omit<ProjectDetailsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
 	| Omit<ProjectsWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
-	| Omit<ProfileWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">;
+	| Omit<ProfileWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">
+	| Omit<TerminalWindow, "id" | "zIndex" | "isMinimized" | "isMaximized">;
 
 /**
  * Window type for creating new windows

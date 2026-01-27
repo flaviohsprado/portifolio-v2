@@ -169,6 +169,36 @@ export function Taskbar() {
 		setActivePopup(current => current === popup ? "none" : popup);
 	};
 
+	const handleOpenStartMenuApp = (id: string, title: string, icon: React.ReactNode, component: React.ReactNode) => {
+		setActivePopup("none");
+
+		const existingWindow = windows.find((w) => w.title === title);
+		if (existingWindow) {
+			if (existingWindow.isMinimized) {
+				restoreWindow(existingWindow.id);
+			} else {
+				focusWindow(existingWindow.id);
+			}
+			return;
+		}
+
+		let type = "window";
+		if (["settings", "terminal", "explorer"].includes(id)) {
+			type = id;
+		} else if (id === "edge") {
+			type = "browser";
+		}
+
+		openWindow({
+			type: type as any,
+			title,
+			icon,
+			component,
+			position: { x: 100 + windows.length * 30, y: 100 + windows.length * 30 },
+			size: { width: 900, height: 600 },
+		});
+	};
+
 	return (
 		<>
 			<div className="fixed bottom-0 left-0 right-0 h-12 bg-background/50 glass backdrop-blur-sm border-t border-gray-700/50 z-50 flex items-center justify-between">
@@ -301,7 +331,7 @@ export function Taskbar() {
 				<StartMenu
 					isOpen={activePopup === "start"}
 					onClose={() => setActivePopup("none")}
-					onOpenApp={() => { }}
+					onOpenApp={handleOpenStartMenuApp}
 				/>
 			)}
 

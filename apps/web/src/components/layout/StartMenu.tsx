@@ -13,10 +13,14 @@ import {
 	Menu,
 	Power,
 	Settings,
+	Terminal,
 	User
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { BrowserApp } from "../apps/Browser";
 import { ProjectDetailsApp } from "../apps/ProjectDetails";
+import { SettingsApp } from "../apps/Settings";
+import { TerminalApp } from "../apps/Terminal";
 
 interface StartMenuProps {
 	isOpen: boolean;
@@ -53,8 +57,9 @@ export function StartMenu({ isOpen, onClose, onOpenApp }: StartMenuProps) {
 	const systemApps = [
 		{ id: "calc", name: "Calculator", icon: <Calculator className="size-4" />, component: <div>Calculator App</div> },
 		{ id: "camera", name: "Camera", icon: <Camera className="size-4" />, component: <div>Camera App</div> },
-		{ id: "edge", name: "Microsoft Edge", icon: <Chrome className="size-4 text-blue-400" />, component: <div>Edge Browser</div> },
-		{ id: "settings", name: "Settings", icon: <Settings className="size-4" />, component: <div>Settings App</div> },
+		{ id: "edge", name: "Microsoft Edge", icon: <Chrome className="size-4 text-blue-400" />, component: <BrowserApp /> },
+		{ id: "settings", name: "Settings", icon: <Settings className="size-4" />, component: <SettingsApp /> },
+		{ id: "terminal", name: "Terminal", icon: <Terminal className="size-4" />, component: <TerminalApp /> },
 	];
 
 	const allApps = [
@@ -99,7 +104,7 @@ export function StartMenu({ isOpen, onClose, onOpenApp }: StartMenuProps) {
 					</div>
 					<div className="flex flex-col gap-1 w-full pb-2">
 						<SidebarBtn icon={<User />} label="Profile" />
-						<SidebarBtn icon={<Settings />} label="Settings" onClick={() => onOpenApp("settings", "Settings", <Settings />, <div>Configurações</div>)} />
+						<SidebarBtn icon={<Settings />} label="Settings" onClick={() => onOpenApp("settings", "Settings", <Settings />, <SettingsApp />)} />
 						<SidebarBtn icon={<Power />} label="Power" onClick={handleSignOut} />
 					</div>
 				</div>
@@ -199,7 +204,7 @@ function TileGroupHeader({ title }: { title: string }) {
 	return (
 		<div className="group flex items-center justify-between h-8 mb-1 cursor-pointer hover:bg-transparent">
 			<span className="text-xs font-semibold text-white/80 pl-1">{title}</span>
-			<div className="h-[1px] bg-white/20 flex-1 ml-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+			<div className="h-px bg-white/20 flex-1 ml-4 opacity-0 group-hover:opacity-100 transition-opacity" />
 		</div>
 	);
 }
@@ -221,7 +226,7 @@ function LiveTile({ cols, rows, color, icon, label, content, onClick }: LiveTile
 	return (
 		<div
 			onClick={onClick}
-			className={`${colSpan} ${rowSpan} ${color} relative p-2 flex flex-col justify-between cursor-pointer outline outline-2 outline-transparent hover:outline-white/50 transition-all duration-300 group select-none overflow-hidden`}
+			className={`${colSpan} ${rowSpan} ${color} relative p-2 flex flex-col justify-between cursor-pointer outline outline-transparent hover:outline-white/50 transition-all duration-300 group select-none overflow-hidden`}
 		>
 			<div className="flex-1 flex items-center justify-center flex-col">
 				{content ? content : <div className="text-white/90">{icon}</div>}
