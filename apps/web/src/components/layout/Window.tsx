@@ -1,18 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { WindowsEmptyFolderIcon } from "@/components/ui/windows/empty-folder";
 import { resizeHandleClasses } from "@/lib/constants";
 import type { WindowInstance } from "@portifolio-v2/config";
 import {
-	ArrowLeft,
-	ArrowRight,
-	ArrowUp,
-	ChevronRight,
-	Copy, // Importei para simular o ícone de "Restaurar"
+	Copy,
 	Minus,
-	RotateCcw,
-	Search,
 	Square,
-	X,
+	X
 } from "lucide-react";
 
 interface WindowProps {
@@ -51,6 +44,7 @@ export function Window({
 				width: isMaximized ? "100vw" : `${window.size.width}px`,
 				height: isMaximized ? "calc(100vh - 3rem)" : `${window.size.height}px`,
 				zIndex: window.zIndex,
+				display: window.isMinimized ? "none" : "block",
 				willChange: isDragging ? "transform" : "auto",
 			}}
 		>
@@ -113,67 +107,15 @@ export function Window({
 				</div>
 			</div>
 
-			{/* Window Header navigation and search bar */}
-			<div className="flex items-center justify-between py-2 bg-win-bg-panel h-8 border-b border-win-border">
-				<div className="flex items-center gap-2 pl-2">
-					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
-						<ArrowLeft className="h-4 w-4 text-win-text-muted hover:text-white" />
-					</button>
-					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
-						<ArrowRight className="h-4 w-4 text-win-text-muted hover:text-white" />
-					</button>
-					<button type="button" className="p-1 hover:bg-win-hover-control rounded-none disabled:text-win-text-disabled">
-						<ArrowUp className="h-4 w-4 text-win-text-muted hover:text-white" />
-					</button>
-				</div>
 
-				<div className="flex items-center gap-2 flex-1 border border-[#333] bg-[#2d2d2d] mx-1 h-6 px-2">
-					<div className="flex items-center gap-2 flex-1 overflow-hidden">
-						<WindowsEmptyFolderIcon className="size-4 min-w-4" />
-						<ChevronRight className="size-3 text-gray-400 min-w-3" />
-						<span className="text-xs truncate">{window.title}</span>
-					</div>
-
-					<div className="flex items-center gap-2">
-						<button type="button" className="p-0.5 hover:bg-[#191919] rounded">
-							<RotateCcw className="h-3.5 w-3.5 text-[#808080]!" />
-						</button>
-					</div>
-				</div>
-
-				<div className="flex items-center gap-2 flex-1 border border-[#333] bg-[#2d2d2d] mx-1 max-w-64 h-6 px-2">
-					<div className="flex items-center gap-2 flex-1 pl-1">
-						<input
-							type="text"
-							placeholder={`Search in ${window.title}`}
-							className="bg-transparent text-xs placeholder-[#808080]! outline-none w-full border-none focus:ring-0 p-0 h-full"
-						/>
-					</div>
-
-					<div className="flex items-center gap-2">
-						<button type="button" className="p-0.5 hover:bg-[#191919] rounded">
-							<Search className="h-3.5 w-3.5 text-[#808080]!" />
-						</button>
-					</div>
-				</div>
-			</div>
 
 			{/* Window Content */}
-			{/* Ajuste de altura: 100% - (Header 2rem + Nav 2rem + Footer 1.5rem = 5.5rem) */}
-			<div className="h-[calc(100%-5.5rem)] bg-[#0c0c0c] overflow-auto text-white">
+			{/* Ajuste de altura: 100% - (Header 2rem / 32px) */}
+			<div className="h-[calc(100%-2rem)] bg-[#0c0c0c] overflow-auto text-white">
 				{children}
 			</div>
 
-			{/* Window Footer */}
-			<div className="bg-[#333333] border-t border-[#191919] px-4 h-6 flex items-center justify-between text-xs text-[#808080]!">
-				<span className="flex items-center gap-4">
-					<span>8 itens</span>
-					<span className="border-l border-gray-600 pl-4">1 item selected</span>
-				</span>
-				<div className="flex gap-2">
-					{/* Ícones de visualização de lista/grid poderiam vir aqui */}
-				</div>
-			</div>
+
 		</div>
 	);
 }
