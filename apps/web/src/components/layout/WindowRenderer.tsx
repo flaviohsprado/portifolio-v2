@@ -1,9 +1,10 @@
 import { useWindowManager } from "@/hooks/use-window-manager";
+import { useWindowResize } from "@/hooks/use-window-resize";
 import { constrainToBoundaries } from "@/lib/boundary-utils";
 import type { WindowInstance } from "@portifolio-v2/config";
 import { useEffect, useState } from "react";
 import { BrowserApp } from "../apps/Browser";
-import { FileExplorerApp } from "../apps/FileExplorer";
+import { FileExplorer } from "../apps/FileExplorer";
 import { ProjectDetailsApp } from "../apps/ProjectDetails";
 import { SettingsApp } from "../apps/Settings";
 import { VSCode } from "../apps/vscode";
@@ -21,6 +22,7 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 		focusWindow,
 		updateWindowPosition,
 	} = useWindowManager();
+	const { startResize, isResizing } = useWindowResize(window);
 
 	const [position, setPosition] = useState(window.position);
 	const [isDragging, setIsDragging] = useState(false);
@@ -100,13 +102,10 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 
 	const handleMaximize = () => {
 		if (isMaximized) {
-			// Restore to original size and position
 			setIsMaximized(false);
 			setPosition(originalPosition);
 		} else {
-			// Save current position before maximizing
 			setOriginalPosition(position);
-			// Maximize to full screen
 			setIsMaximized(true);
 			setPosition({ x: 0, y: 0 });
 		}
@@ -121,7 +120,6 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 		minimizeWindow(window.id);
 	};
 
-	// Render different window types
 	const renderWindowContent = () => {
 		switch (window.type) {
 			case "vscode":
@@ -136,7 +134,7 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 					/>
 				);
 			case "explorer":
-				return <FileExplorerApp />;
+				return <FileExplorer />;
 			case "browser":
 				return <BrowserApp />;
 			case "settings":
@@ -149,12 +147,10 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 		}
 	};
 
-	// For VSCode, render the specialized component directly
 	if (window.type === "vscode") {
 		return renderWindowContent();
 	}
 
-	// For other window types, render the standard window wrapper
 	return (
 		<Window
 			window={window}
@@ -165,6 +161,7 @@ export function WindowRenderer({ window }: WindowRendererProps) {
 			handleMinimize={handleMinimize}
 			handleMaximize={handleMaximize}
 			handleClose={handleClose}
+			onResizeStart={startResize}
 		>
 			{renderWindowContent()}
 		</Window>

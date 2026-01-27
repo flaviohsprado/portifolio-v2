@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { WindowsEmptyFolderIcon } from "@/components/ui/windows/empty-folder";
+import { resizeHandleClasses } from "@/lib/constants";
 import type { WindowInstance } from "@portifolio-v2/config";
 import {
 	ArrowLeft,
@@ -24,6 +25,7 @@ interface WindowProps {
 	handleMaximize: () => void;
 	handleClose: () => void;
 	children: React.ReactNode;
+	onResizeStart: (direction: string, e: React.MouseEvent) => void;
 }
 
 export function Window({
@@ -36,21 +38,34 @@ export function Window({
 	handleMaximize,
 	handleClose,
 	children,
+	onResizeStart,
 }: WindowProps) {
 	return (
 		<div
 			className="fixed rounded-none shadow-win-lg overflow-hidden border border-gray-600/50" // Adicionei uma borda subtil para destacar do fundo
 			data-window-container
 			style={{
-				left: isMaximized ? "0px" : `${position.x}px`,
-				top: isMaximized ? "0px" : `${position.y}px`,
+				left: 0,
+				top: 0,
+				transform: isMaximized ? "translate(0, 0)" : `translate(${position.x}px, ${position.y}px)`,
 				width: isMaximized ? "100vw" : `${window.size.width}px`,
-				// AQUI ESTÁ A CORREÇÃO PRINCIPAL:
-				// Subtrai 3rem (48px) que é a altura da tua h-12 taskbar
 				height: isMaximized ? "calc(100vh - 3rem)" : `${window.size.height}px`,
 				zIndex: window.zIndex,
+				willChange: isDragging ? "transform" : "auto",
 			}}
 		>
+			{/* Bordas */}
+			<div onMouseDown={(e) => onResizeStart?.('n', e)} className={`absolute z-50 ${resizeHandleClasses.n} -top-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('s', e)} className={`absolute z-50 ${resizeHandleClasses.s} -bottom-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('e', e)} className={`absolute z-50 ${resizeHandleClasses.e} -right-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('w', e)} className={`absolute z-50 ${resizeHandleClasses.w} -left-1`} />
+
+			{/* Cantos (Prioridade no z-index) */}
+			<div onMouseDown={(e) => onResizeStart?.('ne', e)} className={`absolute z-50 ${resizeHandleClasses.ne} -top-1 -right-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('nw', e)} className={`absolute z-50 ${resizeHandleClasses.nw} -top-1 -left-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('se', e)} className={`absolute z-50 ${resizeHandleClasses.se} -bottom-1 -right-1`} />
+			<div onMouseDown={(e) => onResizeStart?.('sw', e)} className={`absolute z-50 ${resizeHandleClasses.sw} -bottom-1 -left-1`} />
+
 			{/* Title Bar */}
 			<div
 				role="toolbar"
