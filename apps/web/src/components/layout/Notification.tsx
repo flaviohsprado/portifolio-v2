@@ -15,6 +15,7 @@ import {
 	X,
 } from "lucide-react";
 import { useState } from "react";
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader } from "../ui/drawer";
 
 interface ActionCenterProps {
 	isOpen: boolean;
@@ -76,23 +77,9 @@ export function ActionCenter({ isOpen, onClose }: ActionCenterProps) {
 	};
 
 	return (
-		<>
-			{/* Overlay transparente para fechar ao clicar fora */}
-			{isOpen && (
-				<div
-					className="fixed inset-0 z-40 bg-transparent"
-					onClick={onClose}
-					role="presentation"
-				/>
-			)}
-
-			<div
-				className={`fixed top-0 right-0 h-[calc(100vh-3rem)] max-h-[calc(100vh-3rem)] w-[360px] bg-win-bg-taskbar backdrop-blur-xl border-l border-win-border z-40 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
-					isOpen ? "translate-x-0" : "translate-x-full"
-				}`}
-			>
-				{/* Header - Manage Notifications */}
-				<div className="flex justify-end p-2">
+		<Drawer open={isOpen} onOpenChange={onClose} direction="right">
+			<DrawerContent>
+				<DrawerHeader>
 					<Button
 						variant="ghost"
 						size="sm"
@@ -101,9 +88,8 @@ export function ActionCenter({ isOpen, onClose }: ActionCenterProps) {
 					>
 						Limpar todas
 					</Button>
-				</div>
+				</DrawerHeader>
 
-				{/* Notifications Area */}
 				<ScrollArea className="flex-1 px-4">
 					<div className="flex flex-col gap-4 pb-4">
 						{MOCK_NOTIFICATIONS.map((notif) => (
@@ -139,54 +125,55 @@ export function ActionCenter({ isOpen, onClose }: ActionCenterProps) {
 					</div>
 				</ScrollArea>
 
-				{/* Quick Actions Footer (Bottom Grid) */}
-				<div className="mt-auto bg-win-bg-panel/40 p-4 grid grid-cols-4 gap-2 border-t border-win-border">
-					<QuickAction
-						active={toggles.wifi}
-						icon={<Wifi />}
-						label="Wi-Fi"
-						onClick={() => toggle("wifi")}
-					/>
-					<QuickAction
-						active={toggles.bluetooth}
-						icon={<Bluetooth />}
-						label="Bluetooth"
-						onClick={() => toggle("bluetooth")}
-					/>
-					<QuickAction
-						active={toggles.airplane}
-						icon={<Plane />}
-						label="Avião"
-						onClick={() => toggle("airplane")}
-					/>
-					<QuickAction
-						active={toggles.battery}
-						icon={<Battery />}
-						label="Economia"
-						onClick={() => toggle("battery")}
-					/>
-					<QuickAction
-						active={toggles.location}
-						icon={<MapPin />}
-						label="Local"
-						onClick={() => toggle("location")}
-					/>
-					<QuickAction
-						active={toggles.night}
-						icon={<Moon />}
-						label="Luz Noturna"
-						onClick={() => toggle("night")}
-					/>
-					{/* Botão para abrir Configurações (mock) */}
-					<QuickAction
-						active={false}
-						icon={<Settings />}
-						label="Todas config."
-						onClick={() => {}}
-					/>
-				</div>
-			</div>
-		</>
+				<DrawerFooter>
+					<div className="mt-auto bg-win-bg-panel/40 p-4 grid grid-cols-4 gap-2 border-t border-win-border">
+						<QuickAction
+							active={toggles.wifi}
+							icon={<Wifi />}
+							label="Wi-Fi"
+							onClick={() => toggle("wifi")}
+						/>
+						<QuickAction
+							active={toggles.bluetooth}
+							icon={<Bluetooth />}
+							label="Bluetooth"
+							onClick={() => toggle("bluetooth")}
+						/>
+						<QuickAction
+							active={toggles.airplane}
+							icon={<Plane />}
+							label="Avião"
+							onClick={() => toggle("airplane")}
+						/>
+						<QuickAction
+							active={toggles.battery}
+							icon={<Battery />}
+							label="Economia"
+							onClick={() => toggle("battery")}
+						/>
+						<QuickAction
+							active={toggles.location}
+							icon={<MapPin />}
+							label="Local"
+							onClick={() => toggle("location")}
+						/>
+						<QuickAction
+							active={toggles.night}
+							icon={<Moon />}
+							label="Luz Noturna"
+							onClick={() => toggle("night")}
+						/>
+						{/* Botão para abrir Configurações (mock) */}
+						<QuickAction
+							active={false}
+							icon={<Settings />}
+							label="Todas config."
+							onClick={() => { }}
+						/>
+					</div>
+				</DrawerFooter>
+			</DrawerContent>
+		</Drawer>
 	);
 }
 
@@ -206,11 +193,10 @@ function QuickAction({
 			<button
 				onClick={onClick}
 				type="button"
-				className={`size-12 flex items-center justify-center border transition-all rounded-sm ${
-					active
-						? "bg-win-accent border-win-accent text-white hover:brightness-110"
-						: "bg-win-bg-surface border-win-border text-white hover:bg-win-hover-control"
-				}`}
+				className={`size-12 flex items-center justify-center border transition-all rounded-sm ${active
+					? "bg-win-accent border-win-accent text-white hover:brightness-110"
+					: "bg-win-bg-surface border-win-border text-white hover:bg-win-hover-control"
+					}`}
 			>
 				<div className="[&>svg]:size-5">{icon}</div>
 			</button>

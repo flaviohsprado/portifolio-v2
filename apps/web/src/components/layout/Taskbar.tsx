@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
-	TooltipTrigger,
+	TooltipTrigger
 } from "@/components/ui/tooltip";
 import { WindowsEdgeIcon } from "@/components/ui/windows/edge";
 import { WindowsSettingsIcon } from "@/components/ui/windows/settings";
@@ -10,19 +10,24 @@ import { TaskbarFolderIcon } from "@/components/ui/windows/taskbar-folder";
 import { WindowsIcon } from "@/components/ui/windows/windows-icon";
 import { useWindowManager } from "@/hooks/use-window-manager";
 import type { WindowInstance } from "@portifolio-v2/config";
-import { ChevronUp, MessageSquare, Monitor, Volume2 } from "lucide-react";
+import { ChevronUp, MessageSquare, Volume2, Wifi } from "lucide-react";
 import { useMemo, useState } from "react";
 import { GroupedWindowTooltip } from "./GroupedWindowTooltip";
+import { ActionCenter } from "./Notification";
 import { StartMenu } from "./StartMenu";
+import { CalendarFlyout } from "./taskbar/CalendarFlyout";
+import { NetworkFlyout, VolumeFlyout } from "./taskbar/SystemFlyouts";
 
 interface TaskbarProps {
 	onToggleActionCenter?: () => void;
 }
 
+type TrayPopup = "none" | "start" | "calendar" | "volume" | "network" | "action-center";
+
 export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 	const { windows, openWindow, focusWindow, restoreWindow } =
 		useWindowManager();
-	const [openMenu, setOpenMenu] = useState(false);
+	const [activePopup, setActivePopup] = useState<TrayPopup>("none");
 
 	// Group windows by type
 	const groupedWindows = useMemo(() => {
@@ -103,12 +108,12 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 			color: "text-white",
 		},
 		/*{
-         id: "vscode",
-         icon: <VSCodeIcon className="size-6" />,
-         label: "VSCode",
-         type: "vscode" as const,
-         color: "text-white",
-      },*/
+		 id: "vscode",
+		 icon: <VSCodeIcon className="size-6" />,
+		 label: "VSCode",
+		 type: "vscode" as const,
+		 color: "text-white",
+	  },*/
 	];
 
 	const handleAppClick = (app: (typeof pinnedApps)[0]) => {
@@ -164,21 +169,23 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 		}
 	};
 
+	const togglePopup = (popup: TrayPopup) => {
+		setActivePopup(current => current === popup ? "none" : popup);
+	};
+
 	return (
 		<>
 			<div className="fixed bottom-0 left-0 right-0 h-12 bg-background/50 glass backdrop-blur-sm border-t border-gray-700/50 z-50 flex items-center justify-between">
 				<div className="flex items-center h-full">
-					{/* Start Button */}
 					<Button
 						variant="ghost"
 						size="icon"
-						onClick={() => setOpenMenu(!openMenu)}
+						onClick={() => togglePopup("start")}
 						className="h-12 w-12 rounded-none hover:bg-gray-800 transition-all group mr-1"
 					>
 						<WindowsIcon className="group-hover:drop-shadow-[0_0_8px_rgba(0,182,240,0.6)] transition-all duration-200" />
 					</Button>
 
-					{/* Pinned Apps */}
 					{pinnedApps.map((app) => (
 						<div key={app.id} className="relative">
 							<Button
@@ -189,12 +196,9 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 							>
 								{app.icon}
 							</Button>
-
-							{/* Active indicator - removed since we don't track isActive anymore */}
 						</div>
 					))}
 
-					{/* Grouped Open Windows */}
 					{groupedWindows.map((group) => (
 						<Tooltip key={group.key}>
 							<TooltipTrigger>
@@ -232,42 +236,37 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 					))}
 				</div>
 
-				<div className="flex items-center justify-center">
-					<Button
-						variant="ghost"
-						size="icon"
-						className="h-12 w-8 hover:bg-[#545454]! hover:text-white! transition-all rounded-none p-0"
-					>
-						<ChevronUp className="h-5 w-5" />
+				<div className="flex items-center h-full">
+					<Button variant="ghost" size="icon" className="h-full w-8 rounded-none hover:bg-white/10">
+						<ChevronUp className="h-4 w-4" />
 					</Button>
+
 					<Button
-						variant="ghost"
-						size="icon"
-						className="h-12 w-8 hover:bg-[#545454]! hover:text-white! transition-all rounded-none p-0"
+						variant="ghost" size="icon"
+						className={`h-full w-8 rounded-none hover:bg-white/10 ${activePopup === "network" ? "bg-white/10" : ""}`}
+						onClick={() => togglePopup("network")}
 					>
-						<Monitor className="h-5 w-5" />
+						<Wifi className="h-4 w-4" />
 					</Button>
+
 					<Button
-						variant="ghost"
-						size="icon"
-						className="h-12 w-8 hover:bg-[#545454]! hover:text-white! transition-all rounded-none p-0"
+						variant="ghost" size="icon"
+						className={`h-full w-8 rounded-none hover:bg-white/10 ${activePopup === "volume" ? "bg-white/10" : ""}`}
+						onClick={() => togglePopup("volume")}
 					>
-						<Volume2 className="h-5 w-5" />
+						<Volume2 className="h-4 w-4" />
 					</Button>
-					<Button
-						variant="ghost"
-						size="icon"
-						className="h-12 w-8 hover:bg-[#545454]! hover:text-white! transition-all rounded-none p-0"
-					>
-						<div className="flex flex-col items-center justify-center">
-							<span className="text-xs font-light">POR</span>
-							<span className="text-xs font-light">PTB</span>
-						</div>
-					</Button>
+
+					<div className="h-full flex flex-col justify-center px-2 hover:bg-white/10 cursor-pointer text-xs text-center">
+						<span>POR</span>
+						<span className="text-[10px]">PTB</span>
+					</div>
+
 					<Button
 						variant="ghost"
 						size="sm"
 						className="h-12 hover:bg-[#545454]! hover:text-white! transition-all gap-2 px-3 rounded-none"
+						onClick={() => togglePopup("calendar")}
 					>
 						<div className="text-xs text-left flex flex-col items-center justify-center">
 							<div className="font-normal leading-tight text-white">
@@ -285,27 +284,58 @@ export function Taskbar({ onToggleActionCenter }: TaskbarProps) {
 							</div>
 						</div>
 					</Button>
+
 					<Button
-						variant="ghost"
-						size="icon"
-						onClick={onToggleActionCenter}
-						className="h-12 w-12 hover:bg-[#545454]! hover:text-white! transition-all rounded-none p-0 relative"
+						variant="ghost" size="icon"
+						className="h-full w-12 rounded-none hover:bg-white/10 ml-1 border-l border-white/5 relative"
+						onClick={() => togglePopup("action-center")}
 					>
-						<MessageSquare className="h-5 w-5" />
-						{/* Badge de notificação (opcional) */}
+						<MessageSquare className="h-4 w-4" />
 						<span className="absolute bottom-3 right-3 flex h-2 w-2">
-							<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-							<span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
+							<span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
 						</span>
 					</Button>
+
+					{/* Show Desktop Slice */}
+					<div className="w-1.5 h-full border-l border-white/10 hover:bg-white/20 cursor-pointer" title="Show desktop" />
 				</div>
 			</div>
 
-			<StartMenu
-				isOpen={openMenu}
-				onClose={() => setOpenMenu(!openMenu)}
-				onOpenApp={() => {}}
-			/>
+			{activePopup === "start" && (
+				<StartMenu
+					isOpen={activePopup === "start"}
+					onClose={() => setActivePopup("none")}
+					onOpenApp={() => { }}
+				/>
+			)}
+
+			{activePopup === "calendar" && (
+				<div className="fixed bottom-12 right-0 z-50">
+					<div className="fixed inset-0 bg-transparent -z-10" onClick={() => setActivePopup("none")} />
+					<CalendarFlyout />
+				</div>
+			)}
+
+			{activePopup === "volume" && (
+				<div className="fixed bottom-12 right-12 z-50">
+					<div className="fixed inset-0 bg-transparent -z-10" onClick={() => setActivePopup("none")} />
+					<VolumeFlyout />
+				</div>
+			)}
+
+			{activePopup === "network" && (
+				<div className="fixed bottom-12 right-24 z-50">
+					<div className="fixed inset-0 bg-transparent -z-10" onClick={() => setActivePopup("none")} />
+					<NetworkFlyout />
+				</div>
+			)}
+
+			{activePopup === "action-center" && (
+				<div className="fixed bottom-12 right-36 z-50">
+					<div className="fixed inset-0 bg-transparent -z-10" onClick={() => setActivePopup("none")} />
+					<ActionCenter isOpen={activePopup === "action-center"} onClose={() => setActivePopup("none")} />
+				</div>
+			)}
 		</>
 	);
 }
