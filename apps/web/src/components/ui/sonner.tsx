@@ -1,45 +1,32 @@
-import type { ToasterProps } from "sonner";
+import { useTheme } from "next-themes"
+import { Toaster as Sonner } from "sonner"
 
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import { Toaster as Sonner } from "sonner";
+type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+  const { theme = "system" } = useTheme()
 
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
-      className="toaster group"
-      icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
-      }}
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
-        } as React.CSSProperties
-      }
+      position="bottom-right"
+      className="toaster group font-segoe"
       toastOptions={{
         classNames: {
-          toast: "cn-toast",
+          toast:
+            "group toast group-[.toaster]:bg-[#1f1f1f] group-[.toaster]:text-white group-[.toaster]:border-[#333] group-[.toaster]:border group-[.toaster]:shadow-2xl group-[.toaster]:rounded-none group-[.toaster]:p-0 group-[.toaster]:w-[360px] group-[.toaster]:overflow-hidden",
+          description: "group-[.toast]:text-gray-400 group-[.toast]:text-xs group-[.toast]:px-4 group-[.toast]:pb-4",
+          actionButton:
+            "group-[.toast]:bg-[#333] group-[.toast]:text-white group-[.toast]:rounded-none",
+          cancelButton:
+            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground group-[.toast]:rounded-none",
+          title: "group-[.toast]:text-sm group-[.toast]:font-semibold group-[.toast]:px-4 group-[.toast]:pt-3 group-[.toast]:mb-1",
+          icon: "group-[.toast]:text-win-accent group-[.toast]:ml-4 group-[.toast]:mt-3",
         },
       }}
       {...props}
     />
-  );
-};
+  )
+}
 
-export { Toaster };
+export { Toaster }
